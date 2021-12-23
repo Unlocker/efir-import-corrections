@@ -1,0 +1,37 @@
+{
+  "Request": {
+    "Inn": "{{order.inn}}",
+    "Type": "BuyCorrection",
+    "InvoiceId": "{{order.uuid}}",
+    "CustomerReceipt": {
+      "TaxationSystem": "{{order.sno}}",
+      "CorrectionInfo": {
+        "Type": "INSTRUCTION",
+        "Description": "{{order.id}}",
+        "ReceiptDate": "{{order.date}}",
+        "ReceiptId": "{{order.id}}"
+      },
+      "Items": [
+        {% for item in order.items %}
+        {
+          "Label": "{{item.nameShort}}",
+          "Price": {{item.price}},
+          "Quantity": {{item.quantity}},
+          "Amount": {{item.total}},
+          "PaymentType": {{item.pObject}},
+          "Vat": "{{item.vat}}",
+          "PaymentMethod": 0
+        }{% if loop.last %}{% else %},{% endif %}
+        {% endfor %}
+      ],
+      "PaymentItems": [
+        {% for payment in order.payments %}
+        {
+          "PaymentType": {{payment.pType}},
+          "Sum": {{payment.sum}}
+        }{% if loop.last %}{% else %},{% endif %}
+        {% endfor %}
+      ]
+    }
+  }
+}
