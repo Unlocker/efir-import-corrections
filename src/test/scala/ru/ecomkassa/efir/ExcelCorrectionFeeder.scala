@@ -3,6 +3,7 @@ package ru.ecomkassa.efir
 import io.gatling.core.feeder
 import io.gatling.core.feeder.CloseableFeeder
 import org.apache.poi.ss.usermodel.{Sheet, Workbook, WorkbookFactory}
+import org.slf4j.LoggerFactory
 
 import java.io.File
 import java.time.LocalDateTime
@@ -16,15 +17,18 @@ class ExcelCorrectionFeeder(
                            )
   extends CloseableFeeder[Order] {
 
+  val log = LoggerFactory.getLogger(classOf[ExcelCorrectionFeeder])
+
   val workbook: Workbook = WorkbookFactory.create(excel)
   private val sheet: Sheet = workbook.getSheetAt(0)
   val lastRowNum: Int = sheet.getLastRowNum
 
   var currentRow: Int = 1
 
-  override def hasNext: Boolean = currentRow < lastRowNum
+  override def hasNext: Boolean = currentRow <= lastRowNum
 
   override def next(): feeder.Record[Order] = {
+    log.warn(s"currentRow=$currentRow; lastRowNum=$lastRowNum")
     val row = sheet.getRow(currentRow)
     val currentId: String = row.getCell(1).toString
     val date: LocalDateTime = row.getCell(0).getLocalDateTimeCellValue
