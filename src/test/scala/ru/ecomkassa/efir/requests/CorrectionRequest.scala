@@ -18,9 +18,15 @@ object CorrectionRequest {
       .body(PebbleFileBody("templates/correction.json"))
       .asJson
       .check(status is 200)
-      .check(jsonPath("$.Data.ReceiptId").notNull)
+      .check(jmesPath("Status").ofType[String].is("Success"))
+      .check(jsonPath("$.Data.ReceiptId").notNull.saveAs("receiptId"))
 
-    feed(feeder).exec(builder)
+    feed(feeder)
+      .exec(builder)
+      .exec{session =>
+        println(s"ReceiptId=${session("receiptId").as[String]}")
+        session
+      }
   }
 
 }

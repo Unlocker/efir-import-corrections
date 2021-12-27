@@ -5,11 +5,11 @@
     "InvoiceId": "{{order.uuid}}",
     "CustomerReceipt": {
       "TaxationSystem": "{{order.sno}}",
+      "Email": "{{order.email}}",
       "CorrectionInfo": {
-        "Type": "INSTRUCTION",
+        "Type": "SELF",
         "Description": "{{order.id}}",
-        "ReceiptDate": "{{order.date}}",
-        "ReceiptId": "{{order.id}}"
+        "ReceiptDate": "{{order.date}}"
       },
       "Items": [
         {% for item in order.items %}

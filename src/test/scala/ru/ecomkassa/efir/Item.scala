@@ -10,5 +10,5 @@ case class Item(
 
   val total: BigDecimal = price.*(quantity).setScale(2, BigDecimal.RoundingMode.UP)
 
-  val nameShort: String = (if (name.length <= 128) name else name.substring(0, 128)).replace('"', '\'')
+  val nameShort: String = Order.limitString(128)(name)
 }

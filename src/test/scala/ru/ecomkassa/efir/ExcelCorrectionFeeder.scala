@@ -28,11 +28,12 @@ class ExcelCorrectionFeeder(
   override def hasNext: Boolean = currentRow <= lastRowNum
 
   override def next(): feeder.Record[Order] = {
-    log.warn(s"currentRow=$currentRow; lastRowNum=$lastRowNum")
+    log.debug(s"currentRow=$currentRow; lastRowNum=$lastRowNum")
     val row = sheet.getRow(currentRow)
     val currentId: String = row.getCell(1).toString
     val date: LocalDateTime = row.getCell(0).getLocalDateTimeCellValue
 
+    val email = row.getCell(5).getStringCellValue
     val bonus = Payment(4, BigDecimal(row.getCell(9).getNumericCellValue))
     val card = Payment(1, BigDecimal(row.getCell(10).getNumericCellValue))
     val place = row.getCell(12).getStringCellValue
@@ -61,7 +62,14 @@ class ExcelCorrectionFeeder(
     currentRow = currentRow + size
     Map(
       "order" -> Order(
-        currentId, date, List(bonus, card).filter(_.sum.>(BigDecimal(0))).asJava, itemList.toList.asJava, place, inn, sno
+        currentId
+        , date
+        , List(bonus, card).filter(_.sum.>(BigDecimal(0))).asJava
+        , itemList.toList.asJava
+        , place
+        , email
+        , inn
+        , sno
       )
     )
   }
