@@ -1,7 +1,7 @@
 package ru.ecomkassa.efir.config
 
 import java.io.File
-import java.nio.file.Path
+import java.nio.file.Paths
 
 object Config {
   /*
@@ -23,7 +23,7 @@ object Config {
 
   val dataFile: File = {
     Option(System.getProperty("datafile"))
-      .map(Path.of(_).toFile)
+      .map(Paths.get(_).toFile)
       .getOrElse(
         new File(getClass.getClassLoader.getResource("data_sample.xlsx").toURI)
       )

@@ -46,12 +46,12 @@ class ExcelCorrectionFeeder(
       val name = itemRow.getCell(6).getStringCellValue
       val quantity = BigDecimal(itemRow.getCell(7).getNumericCellValue)
       val price = BigDecimal(itemRow.getCell(8).getNumericCellValue)
-      val pObject = itemRow.getCell(13).getNumericCellValue.toInt
+      val pObject = itemRow.getCell(13).getStringCellValue match {
+        case "услуга" => 4
+        case "товар" => 1
+      }
       val vat = itemRow.getCell(14).getStringCellValue match {
-        case "ндс10" => "Vat10"
-        case "ндс20" => "Vat20"
-        case "ндс0" => "Vat0"
-        case "ндсНет" => "VatNo"
+        case "БЕЗ НДС" => "VatNo"
       }
       itemList.append(Item(name, price, quantity, pObject, vat))
       size = size + 1
