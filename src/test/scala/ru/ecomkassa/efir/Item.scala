@@ -5,6 +5,7 @@ case class Item(
                  , price: BigDecimal
                  , quantity: BigDecimal
                  , pObject: Int
+                 , pMethod: Int
                  , vat: String
                ) {
 

@@ -9,6 +9,7 @@ import java.util.UUID
 case class Order(
                   id: String
                   , dateTime: LocalDateTime
+                  , reason: String
                   , payments: java.util.List[Payment]
                   , items: java.util.List[Item]
                   , rawPlace: String

@@ -8,7 +8,7 @@
       "Email": "{{order.email}}",
       "CorrectionInfo": {
         "Type": "SELF",
-        "Description": "{{order.id}}",
+        "Description": "{{order.reason}}",
         "ReceiptDate": "{{order.date}}"
       },
       "Items": [
@@ -20,7 +20,7 @@
           "Amount": {{item.total}},
           "PaymentType": {{item.pObject}},
           "Vat": "{{item.vat}}",
-          "PaymentMethod": 0
+          "PaymentMethod": {{item.pMethod}}
         }{% if loop.last %}{% else %},{% endif %}
         {% endfor %}
       ],
