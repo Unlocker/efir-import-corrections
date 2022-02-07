@@ -28,6 +28,6 @@ case class Order(
 object Order {
 
   val limitString: Int => String => String = limit => input => {
-    (if (input.length <= limit) input else input.substring(0, limit)).replace('"', '\'')
+    (if (input.length <= limit) input else input.substring(0, limit)).replace('"', '\'').trim
   }
 }

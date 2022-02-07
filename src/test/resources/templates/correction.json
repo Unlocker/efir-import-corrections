@@ -4,6 +4,7 @@
     "Type": "BuyCorrection",
     "InvoiceId": "{{order.uuid}}",
     "CustomerReceipt": {
+      "BillAddress": "{{order.place}}",
       "TaxationSystem": "{{order.sno}}",
       "Email": "{{order.email}}",
       "CorrectionInfo": {
